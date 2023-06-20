@@ -9,10 +9,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
@@ -40,68 +42,91 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreecontent(drawerState: DrawerState) {
     val scaffoldState = rememberScaffoldState(drawerState = drawerState)
+    val scope = rememberCoroutineScope()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Text(text = "TaskBarState")},
+                title = { Text(text = "TaskTodayApp")},
                 navigationIcon = {
-                    IconButton(onClick = {
-                        CoroutineScope(Dispatchers.Default).launch {
-                            scaffoldState.drawerState.open()
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
                         }
-                         }) {
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Menu,
-                            contentDescription = "Drawer menu")
+                            contentDescription = "Drawer Menu"
+                        )
                     }
-
                 }
             )
         },
-        drawerBackgroundColor = Color.White,
+        drawerBackgroundColor = Color.Red,
         drawerGesturesEnabled = drawerState.isOpen,
         drawerContent = {
-               Box(
-                   modifier = Modifier
-                       .background(Color.Magenta)
-                       .height(16.dp)
-               ){
-                   Text(text = "Opções!!!")
-               }
-                Column() {
-                    Text(text = "Opção de Menu 1")
-                    Text(text = "Opção de Menu 2")
-                    Text(text = "Opção de Menu 3")
-
-                }
-        },
-        content = {
-            paddingValues -> Log.i("PaddingValues", "$paddingValues")
-            Column(modifier = Modifier
-                .background(Color.Yellow)
-                .fillMaxSize()) {
-                MySearchField(modificador = Modifier.fillMaxWidth())
-                listOf<Tarefa>(Tarefa("Estudar prova de calculo","Capitulo 1 do livro xyz",Date(),calendar.set(2023,)))
-                MyTaskWidget()
-                MyTaskWidget(
-                    modificador = Modifier.fillMaxWidth(),
-                    taskName = "Preparar Aula LazyList/LazyColumn",
-                    taskDetails = "É bem melhor usar laztlist do que column",
-                    deadEndDate = Date()
-                )
-                MyTaskWidget(
-                    modificador = Modifier.fillMaxWidth(),
-                    taskName = "Prova de matemática",
-                    taskDetails = "Estudar capitulo 1 e 2",
-                    deadEndDate = Date()
-                )
-                Text(text = "Tesk4")
-
+            Box(
+                modifier = Modifier
+                    .background(Color.Magenta)
+                    .height(16.dp)
+            ){
+                Text(text = "Opções!")
+            }
+            Column(){
+                Text(text = "Opção de Menu 1")
+                Text(text = "Opção de Menu 2")
+                Text(text = "Opção de Menu 3")
             }
         },
+        content = {
+                paddingValues -> Log.i("paddingValues", "$paddingValues")
+            Column(
+                modifier = Modifier
+                    .background(Color.Yellow)
+                    .fillMaxSize()
+            ) {
+                MySearchField(modificador = Modifier.fillMaxWidth())
+
+                val tProvaDeCalculo = Tarefa(
+                    "Estudar Prova de Calculo",
+                    "Captulo",
+                    Date(),
+                    Date(),
+                    status = 0.0
+                )
+
+                val tProvaDeKotlin = Tarefa(
+                    "Estudar Prova de Kotlin",
+                    "Captulo",
+                    Date(),
+                    Date(),
+                    status = 0.0
+                )
+
+                var minhaListaDeTarefas = listOf<Tarefa>(tProvaDeCalculo, tProvaDeKotlin)
+
+                MyTaskWidgetList(minhaListaDeTarefas)
+            }//Column
+        },//content
         bottomBar = {
-            BottomAppBar(content = { Text(text = "asdf")})
+            BottomAppBar(
+                content = { Text("João Pedro Cabral")}
+            )
+        },
+
+        isFloatingActionButtonDocked = false,
+        floatingActionButton = { ExtendedFloatingActionButton(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.AddCircle,
+                    contentDescription = "Add Task"
+                )
+            },
+            text = { Text("ADD")  },
+            onClick = { /*TODO*/ })
+
         }
     )
 }
