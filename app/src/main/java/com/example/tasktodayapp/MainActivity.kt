@@ -104,55 +104,35 @@ fun MainScreenContent(drawerState: DrawerState){
             ) {
                 MySearchField(modifier = Modifier.fillMaxWidth())
 
-                val tAttQTS = Tarefa(
-                    "Atividade de QTS",
-                    "Fazer o teste unitário da aplicação JAVA",
+                val attIng = Tarefa(
+                    "Atividade de Inglês",
+                    "Fazer uma representação do livro abordado em sala de aula",
                     Date(),
                     Date(),
                     status = 0.0
                 )
 
-                val tProvaPAM = Tarefa(
-                    "Prova de PAM",
-                    "Conteúdo Programático do Mês de Julho",
+                val attGEO = Tarefa(
+                    "Atividade de Geo",
+                    "Realizar um seminario abordando o assunto que o seu grupo foi designado",
                     Date(),
                     Date(),
                     status = 0.0
                 )
 
-                val tSeminarioGEO = Tarefa(
-                    "Seminário de Geografia",
-                    "Tema: Geopolítica",
+                val attPAM = Tarefa(
+                    "Atividade de PAM ",
+                    "Estilizar o aplicativo passado em sala de aula",
                     Date(),
                     Date(),
                     status = 0.0
                 )
 
-                val tProvaMAT = Tarefa(
-                    "Prova de Matemática",
-                    "Trigonometria Básica",
-                    Date(),
-                    Date(),
-                    status = 0.0
-                )
 
-                val tAttPDTCC = Tarefa(
-                    "Atividade PDTCC",
-                    "Referencial Teórico do TCC",
-                    Date(),
-                    Date(),
-                    status = 0.0
-                )
 
-                val tProvaPW = Tarefa(
-                    "Prova de PW",
-                    "Fazer um site com bootstrap",
-                    Date(),
-                    Date(),
-                    status = 0.0
-                )
 
-                val minhaListaDeTarefas = listOf(tAttQTS, tAttPDTCC, tProvaMAT, tProvaPAM, tProvaPW, tSeminarioGEO)
+
+                val minhaListaDeTarefas = listOf(attIng, attGEO, attPAM)
 
                 MyTaskWidgetList(minhaListaDeTarefas)
             }//Column
